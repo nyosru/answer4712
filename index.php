@@ -1,39 +1,44 @@
 <?php
 
-class calc
+class Сalc
 {
 
     static public $kolvo = 0;
     static public $e = [];
 
-    public static function  round($itog, $nn)
+    public static function kombinatorikaSearch($itog, $nn = 1)
     {
 
+		// при первом запросе обнуляем базовые переменные
         if ($nn == 1) {
-            calc::$kolvo = 0;
-            calc::$e = [];
+            self::$kolvo = 0;
+            self::$e = [];
         }
 
+		// и начинаем перебирать варианты
         for (self::$e[$nn] = 1; self::$e[$nn] <= 3; self::$e[$nn]++) {
+        	// если сумма сходится, то +1 к количеству и без продолжения по этой ветке
             if (array_sum(self::$e) == $itog) {
                 self::$kolvo++;
-                // комент, смотрим что за массив по сумме подходит 
+                // комент, смотрим что за массив по сумме подходит
                 //echo '<br/>'.self::$kolvo.' // '.implode(self::$e,' | ');
-            } else if ($itog > $nn) {
-
+            }
+			// если суммы не хватает то идём дальше и добавляем ещё один перебор
+            else if ($itog > $nn) {
                 self::round($itog, $nn + 1);
             }
         }
+
         self::$e[$nn] = 0;
     }
 }
 
-calc::round(5, 1);
+Сalc::kombinatorikaSearch(5);
 echo '<br/>';
-echo 'step 5 = kolvo:' . calc::$kolvo;
-calc::round(8, 1);
+echo 'step 5 = kolvo:' . Сalc::$kolvo;
+Сalc::kombinatorikaSearch(8);
 echo '<br/>';
-echo 'step 8 = kolvo:' . calc::$kolvo;
-calc::round(9, 1);
+echo 'step 8 = kolvo:' . Сalc::$kolvo;
+Сalc::kombinatorikaSearch(9);
 echo '<br/>';
-echo 'step 9 = kolvo:' . calc::$kolvo;
+echo 'step 9 = kolvo:' . Сalc::$kolvo;
